@@ -4,13 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_easyrefresh/src/bloc_refresher_bloc.dart';
-import 'package:flutter_easyrefresh/src/bloc_refresher_event.dart';
 import 'package:flutter_easyrefresh/src/bloc_refresher_state.dart';
 
-import 'behavior/behavior.dart';
-import 'footer/footer.dart';
-import 'header/header.dart';
 import 'scrollPhysics/scroll_physics.dart';
 
 class BlocEasyRefresh extends StatefulWidget {
@@ -151,7 +146,7 @@ class BlocEasyRefreshState extends State<BlocEasyRefresh>
   // 加载完成(用于判断是否有更多数据)
   bool _loaded = false;
   // 等待State回调列表
-  final List<VoidCallback> _waitStateCallBackList = List();
+  final List<VoidCallback> _waitStateCallBackList = [];
 
   // 等待state更新完成
   void waitState(VoidCallback done) {
@@ -291,12 +286,12 @@ class BlocEasyRefreshState extends State<BlocEasyRefresh>
           duration: Duration(milliseconds: time), vsync: this);
       _scrollOverAnimation = new Tween(begin: 0.0, end: _refreshHeight * 0.9)
           .animate(_scrollOverAnimationController)
-            ..addListener(() {
-              if (_scrollOverAnimation.value == 0.0) return;
-              setState(() {
-                _setTopItemHeight(_scrollOverAnimation.value);
-              });
-            });
+        ..addListener(() {
+          if (_scrollOverAnimation.value == 0.0) return;
+          setState(() {
+            _setTopItemHeight(_scrollOverAnimation.value);
+          });
+        });
       _scrollOverAnimation.addStatusListener((animationStatus) {
         if (animationStatus == AnimationStatus.completed) {
           setState(() {
@@ -330,14 +325,12 @@ class BlocEasyRefreshState extends State<BlocEasyRefresh>
           duration: Duration(milliseconds: time), vsync: this);
       _scrollOverAnimation = new Tween(begin: 0.0, end: _loadHeight * 0.9)
           .animate(_scrollOverAnimationController)
-            ..addListener(() {
-              if (_scrollOverAnimation.value == 0.0) return;
-              _scrollController
-                  .jumpTo(_scrollController.position.maxScrollExtent);
-              _setBottomItemHeight(_scrollOverAnimation.value);
-              _scrollController
-                  .jumpTo(_scrollController.position.maxScrollExtent);
-            });
+        ..addListener(() {
+          if (_scrollOverAnimation.value == 0.0) return;
+          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+          _setBottomItemHeight(_scrollOverAnimation.value);
+          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+        });
       _scrollOverAnimation.addStatusListener((animationStatus) {
         if (animationStatus == AnimationStatus.completed) {
           setState(() {
@@ -566,8 +559,8 @@ class BlocEasyRefreshState extends State<BlocEasyRefresh>
     // 触发加载动画
     _callLoadAnimationController = new AnimationController(
         duration: const Duration(milliseconds: 100), vsync: this);
-    _callLoadAnimation = new Tween(begin: 0.0, end: 1.0).animate(
-        _callLoadAnimationController)
+    _callLoadAnimation = new Tween(begin: 0.0, end: 1.0)
+        .animate(_callLoadAnimationController)
       ..addListener(() {
         if (_callLoadAnimation.value == 0.0 &&
             _callLoadAnimation.status != AnimationStatus.forward) return;
@@ -645,7 +638,7 @@ class BlocEasyRefreshState extends State<BlocEasyRefresh>
 
   void _refreshStart(
       RefreshBoxDirectionStatus refreshBoxDirectionStatus) async {
-    BlocRefresherBloc().dispatch(RefreshingBlocRefresherEvent(
+    BlocRefresherBloc().add(RefreshingBlocRefresherEvent(
         uniqueKey: widget.uniqueKey,
         refreshBoxDirectionStatus: refreshBoxDirectionStatus));
   }
@@ -1090,7 +1083,7 @@ class BlocEasyRefreshState extends State<BlocEasyRefresh>
       // 记录列表项
       this._itemCount = body.semanticChildCount;
     } else {
-      slivers = new List<Widget>();
+      slivers = <Widget>[];
       slivers
           .add(SliverList(delegate: SliverChildListDelegate(<Widget>[body])));
     }

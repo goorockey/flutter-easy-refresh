@@ -1,6 +1,5 @@
 import 'package:flutter_easyrefresh/src/footer/footer.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'dart:math' as math show sin, pi;
 
 /// 弹出底部视图

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-import 'package:flutter_easyrefresh/src/bloc_refresher_bloc.dart';
 import 'package:flutter_easyrefresh/src/bloc_refresher_state.dart';
 import 'package:meta/meta.dart';
 

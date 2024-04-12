@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'src/header/header.dart';
 
 /// 球脉冲顶部视图

@@ -4,10 +4,15 @@ import 'package:meta/meta.dart';
 
 @immutable
 abstract class BlocRefresherState extends Equatable {
-  BlocRefresherState([Iterable props]) : super(props);
+  BlocRefresherState([this.iterable]);
+
+  final Iterable iterable;
 
   /// Copy object for use in action
   BlocRefresherState getStateCopy();
+
+  @override
+  List<Object> get props => [iterable];
 }
 
 class UnBlocRefresherState extends BlocRefresherState {

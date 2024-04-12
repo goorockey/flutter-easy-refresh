@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 /// 滚动视图边界光晕
 class RefreshBehavior extends ScrollBehavior {
