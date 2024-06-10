@@ -16,7 +16,7 @@ class RefreshScrollPhysics extends ScrollPhysics {
   final bool footerFloat;
 
   @override
-  RefreshScrollPhysics applyTo(ScrollPhysics ancestor) {
+  RefreshScrollPhysics applyTo(ScrollPhysics? ancestor) {
     return new RefreshScrollPhysics(this.footerFloat,
         parent: buildParent(ancestor));
   }
@@ -104,7 +104,7 @@ class RefreshAlwaysScrollPhysics extends ScrollPhysics {
       : super(parent: parent);
 
   @override
-  RefreshAlwaysScrollPhysics applyTo(ScrollPhysics ancestor) {
+  RefreshAlwaysScrollPhysics applyTo(ScrollPhysics? ancestor) {
     _alwaysLastPixels = null;
     _alwaysLastDirection = null;
     _isPullBack = false;
